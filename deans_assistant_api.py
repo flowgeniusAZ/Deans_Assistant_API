@@ -33,7 +33,7 @@ if st.button('Submit'):
         )
 
         #create and monitor the run
-        run = client.beta.threads.run.create(
+        run = client.beta.threads.runs.create(
             thread_id=thread.id,
             assistant_id=my_assistant.id
         )
