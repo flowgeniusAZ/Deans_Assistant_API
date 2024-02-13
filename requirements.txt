@@ -1,0 +1,17 @@
+#requirements.txt
+
+openai
+streamlit
+streamlit-elements
+streamlit-extras
+extra-streamlit-components
+streamlit-on-Hover-tabs
+streamlit-option-menu
+streamlit-authenticator
+st-login-form
+simple_salesforce
+langchain
+pandas
+requests
+supabase
+pyshark
