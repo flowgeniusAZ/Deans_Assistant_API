@@ -23,7 +23,7 @@ if st.button('Submit'):
     with st.spinner('Fetching response...'):
         #Retrieve existing assistant
         my_assistant = client.beta.assistants.retrieve("asst_VS8FnRtUoE2P5YvZHQ7h8LzJ")
-        st.write("Assistant Retrieved:", my_assistant)
+        #st.write("Assistant Retrieved:", my_assistant)
 
         #create thread and messages
         thread = client.beta.threads.create(
@@ -52,4 +52,5 @@ if st.button('Submit'):
             thread_messages = client.beta.threads.messages.list(thread.id)
             for message in thread_messages.data:
                 if message.role == 'assistant':
-                    st.write("Assistant says:", message.content)
+                    #st.write("Assistant says:", message.content)
+                    st.markdown(f"**Assistant's Response:** {message.content}")
