@@ -52,8 +52,9 @@ if st.button('Submit'):
             thread_messages = client.beta.threads.messages.list(thread.id)
             for message in thread_messages.data:
                 if message.role == 'assistant':
-                    #st.write("Assistant says:", message.content)
-                    st.markdown(f"**Assistant's Response:** {message.content[0].text}")
+                    for content_part in message.content:
+                        message_text = content_part.text.value
+                        st.markdown(f"**Assistant's Response:** {message_text}")
 
 # Add a spacer
 st.write("")  # Adjust the number of these based on needed spacing
