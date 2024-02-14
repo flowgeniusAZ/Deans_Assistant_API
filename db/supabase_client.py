@@ -10,6 +10,8 @@ def init_connection():
     key = st.secrets["supabase_key"]
     return create_client(url,key)
 
+supabase = init_connection()
+
 def upload_embedding(filename: str, filetype: str, embedding):
     data = {"filename": filename, "filetype": filetype, "embedding": embedding}
     supabase.table("embeddings").insert(data).execute()
