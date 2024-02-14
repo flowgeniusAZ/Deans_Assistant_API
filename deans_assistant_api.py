@@ -60,6 +60,8 @@ st.write("")  # Adjust the number of these based on needed spacing
 st.write("")
 st.write("")
 st.write("")
+st.write("")
+st.write("")
 
 # Add a Streamlit footer
 footer_html = """
