@@ -53,7 +53,7 @@ if st.button('Submit'):
             for message in thread_messages.data:
                 if message.role == 'assistant':
                     #st.write("Assistant says:", message.content)
-                    st.markdown(f"**Assistant's Response:** {message.content}")
+                    st.markdown(f"**Assistant's Response:** {message.content[0].text}")
 
 # Add a spacer
 st.write("")  # Adjust the number of these based on needed spacing
