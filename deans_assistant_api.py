@@ -10,7 +10,7 @@ import streamlit as st
 client = OpenAI(api_key='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')
 
 #Streamlit App Title
-st.title('Dean\'s Assistant API')
+st.title('Dean\'s Assistant')
 
 #Streamlit image for branding
 st.image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQroYsyWjvZmkyguxf2_XUKqcWTNLkZrRbPzPL8MU5I&s', caption='Plainfield School District 202')
