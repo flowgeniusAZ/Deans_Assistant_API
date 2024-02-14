@@ -55,6 +55,12 @@ if st.button('Submit'):
                     #st.write("Assistant says:", message.content)
                     st.markdown(f"**Assistant's Response:** {message.content}")
 
+# Add a spacer
+st.write("")  # Adjust the number of these based on needed spacing
+st.write("")
+st.write("")
+st.write("")
+
 # Add a Streamlit footer
 footer_html = """
 <div style='position: absolute; bottom: 0; left: 0; width: 100%; text-align: right; padding: 10px;'>
