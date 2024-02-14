@@ -15,3 +15,5 @@ pandas
 requests
 supabase
 pyshark
+docx
+fitz
