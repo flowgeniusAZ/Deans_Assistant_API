@@ -16,3 +16,4 @@ def upload_embedding(filename: str, filetype: str, embedding):
     data = {"filename": filename, "filetype": filetype, "embedding": embedding}
     supabase.table("embeddings").insert(data).execute()
 
+
