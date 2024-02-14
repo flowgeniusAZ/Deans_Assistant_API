@@ -7,7 +7,7 @@ import time
 import streamlit as st
 
 #Initialize OpenAI Clinet
-client = OpenAI(api_key= OPEN_API_KEY)
+client = OpenAI(api_key= "OPEN_API_KEY")
 
 #Streamlit App Title
 st.title('Dean\'s Assistant')
