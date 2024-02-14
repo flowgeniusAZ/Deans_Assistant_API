@@ -16,7 +16,7 @@ st.title('Dean\'s Assistant API')
 st.image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQroYsyWjvZmkyguxf2_XUKqcWTNLkZrRbPzPL8MU5I&s', caption='Plainfield School District 202')
 
 #Streamlit user input for the prompt
-user_prompt = st.text_area("Enter your question:", "Kid was vaping in the bathroom. what consequences should i give?")
+user_prompt = st.text_area("Enter your question:", "Example: A student just had his third tardy. What consequences should I consider?")
 
 #Button to submit question
 if st.button('Submit'):
