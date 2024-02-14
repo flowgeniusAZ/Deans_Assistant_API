@@ -1,8 +1,9 @@
 #supabse_client.py
 
 from supabase import create_client, Client
+import
 
-supabase: Client = create_client(url, key)
+url = st.secrets("url
 
 def upload_embedding(filename: str, filetype: str, embedding):
     data = {"filename": filename, "filetype": filetype, "embedding": embedding}
