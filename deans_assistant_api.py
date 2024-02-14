@@ -5,9 +5,6 @@ import openai
 from openai import OpenAI
 import time
 import streamlit as st
-from utils.file_processor import docx_to_text, pdf_to_text
-from utils.embeddings import generate_embedding
-from db.supabase_client import upload_embedding
 
 #Initialize OpenAI Clinet
 client = OpenAI(api_key= "OPEN_API_KEY")
@@ -57,22 +54,6 @@ if st.button('Submit'):
                 if message.role == 'assistant':
                     #st.write("Assistant says:", message.content)
                     st.markdown(f"**Assistant's Response:** {message.content}")
-
-uploaded_file = st.file_uploader("Upload Files", type=['docx', 'pdf'])
-if uploaded_file is not None:
-    if uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        text = docx_to_text(uploaded_file)
-    elif uploaded_file.type == "application/pdf":
-        text = pdf_to_text(uploaded_file)
-    else:
-        st.write("Unsupported file type")
-        text = None
-
-    if text:
-        with st.spinner('Generating Embedding...'):
-            embedding = generate_embedding(text)
-            upload_embedding(uploaded_file.name, uploaded_file.type, embedding)
-            st.success("Embedding generated and uploaded successfully.")
 
 # Add a spacer
 st.write("")  # Adjust the number of these based on needed spacing
