@@ -57,7 +57,7 @@ if st.button('Submit'):
 
 # Add a Streamlit footer
 footer_html = """
-<div style='position: absolute; bottom: 0; left: 0; width: 100%; text-align: left; padding: 10px;'>
+<div style='position: absolute; bottom: 0; left: 0; width: 100%; text-align: right; padding: 10px;'>
     <p style='margin: 0;'>Powered by FlowGenius</p>
     <img src='https://media.licdn.com/dms/image/D5603AQGzpMfnqrHpvA/profile-displayphoto-shrink_800_800/0/1691028781928?e=2147483647&v=beta&t=DR35TiCIcWT711AOyjHTsWIf2E2L0t_ktfGDqrqSYiE' style='height: 50px; margin-top: 5px;'/>
 </div>
