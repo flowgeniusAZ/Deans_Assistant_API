@@ -89,6 +89,15 @@ for i, (question, response) in enumerate(st.session_state['q_and_a']):
         st.write(f"**Response:** {response}")
 
 
+# Add a spacer
+st.write("")  # Adjust the number of these based on needed spacing
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+
+
 # Add a Streamlit footer
 footer_html = """
 <div style='position: absolute; bottom: 0; left: 0; width: 100%; text-align: right; padding: 10px;'>
