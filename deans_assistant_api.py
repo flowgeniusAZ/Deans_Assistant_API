@@ -24,8 +24,10 @@ st.image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQroYsyWjvZmkygux
 #Streamlit user input for the prompt
 user_prompt = st.text_area("Enter your question:", "Example: A student just had his third tardy. What consequences should I consider?")
 
+col1, col2 = st.columns(2)
+
 #Button to submit question
-if st.button('Submit'):
+if col1.button('Submit'):
     with st.spinner('Fetching response...'):
         #Retrieve existing assistant
         my_assistant = client.beta.assistants.retrieve("asst_VS8FnRtUoE2P5YvZHQ7h8LzJ")
@@ -59,13 +61,22 @@ if st.button('Submit'):
                     if message.role == 'assistant':
                         for content_part in message.content:
                             message_text = content_part.text.value
-                            # Save the latest question and response pair to the session state
-                            st.session_state['q_and_a'].append((user_prompt, message_text))
-                            # Keep only the last 5 question and response pairs
-                            st.session_state['q_and_a'] = st.session_state['q_and_a'][-5:]
+                            # For each response, add it to the session state with show_response set to True
+                            st.session_state['q_and_a'].append({
+                                "question": user_prompt,
+                                "response": message_text,  # Assume this is fetched as before
+                                "show_response": True
+                            })
                 
                             st.markdown(f"**Assistant's Response:** {message_text}")
     
+# Button to clear responses (not the questions)
+if col2.button('Clear Chat'):
+    # Iterate through each Q&A pair and set show_response to False
+    for qa in st.session_state['q_and_a']:
+        qa['show_response'] = False
+    st.experimental_rerun()
+
 
 
 # Add a spacer
@@ -78,15 +89,14 @@ st.write("")
 
 
 
-# Display recent questions and responses using expanders
+# Display recent questions and (optionally) responses
 st.write("## Recent Questions and Responses")
-for i, (question, response) in enumerate(st.session_state['q_and_a']):
-    # Truncate the question to the first 50 characters plus "..." if it's longer
-    truncated_question = (question[:50] + '...') if len(question) > 50 else question
-    expander_label = f"Q&A {i+1}: {truncated_question}"
+for qa in st.session_state['q_and_a']:
+    expander_label = f"Q&A: {qa['question'][:50]}..." if len(qa['question']) > 50 else qa['question']
     with st.expander(expander_label):
-        st.write(f"**Question:** {question}")
-        st.write(f"**Response:** {response}")
+        st.write(f"**Question:** {qa['question']}")
+        if qa['show_response']:
+            st.write(f"**Response:** {qa['response']}")
 
 
 # Add a spacer
