@@ -34,7 +34,17 @@ if st.button('Submit'):
                 }
             ]
         )
+        
+        st.session_state['conversation_history'].append((user_prompt, response))
+        # Ensure only the 5 most recent pairs are kept
+        st.session_state['conversation_history'] = st.session_state['conversation_history'][-5:]
 
+        # Create tabs for each question and response pair
+        for i, (q, r) in enumerate(st.session_state['conversation_history'], start=1):
+            tab = st.tabs(f"Q{i}: {q[:10]}...")[0]
+            with tab:
+                st.write(f"**Question:** {q}")
+                st.write(f"**Response:** {r}")
         #create and monitor the run
         run = client.beta.threads.runs.create(
             thread_id=thread.id,
