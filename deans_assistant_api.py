@@ -88,6 +88,10 @@ st.markdown(footer_html, unsafe_allow_html=True)
 # Display recent questions and responses using expanders
 st.write("## Recent Questions and Responses")
 for i, (question, response) in enumerate(st.session_state['q_and_a']):
-    with st.expander(f"Q&A {i+1}"):
-        st.write(f"**Question {i+1}:** {question}")
-        st.write(f"**Response {i+1}:** {response}")
+    # Truncate the question to the first 50 characters plus "..." if it's longer
+    truncated_question = (question[:50] + '...') if len(question) > 50 else question
+    expander_label = f"Q&A {i+1}: {truncated_question}"
+    with st.expander(expander_label):
+        st.write(f"**Question:** {question}")
+        st.write(f"**Response:** {response}")
+
