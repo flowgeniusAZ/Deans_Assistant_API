@@ -35,20 +35,24 @@ if st.button('Submit'):
             ]
         )
 
-        while run.status != 'completed':
-            run = client.beta.threads.runs.retrieve(
-                thread_id=thread.id,
-                run_id=run.id
-            )
-            time.sleep(5)
-
-            #fetch and display messages
-            thread_messages = client.beta.threads.messages.list(thread.id)
-            for message in thread_messages.data:
-                if message.role == 'assistant':
-                    for content_part in message.content:
-                        message_text = content_part.text.value
-                        st.markdown(f"**Assistant's Response:** {message_text}")
+        while run.status == "in_progress" or run.status=="queued":
+        time.sleep(1)
+        run = client.beta.threads.runs.retrieve(
+            run_id=run.id,
+            thread_id=varThreadId
+        )
+ 
+        if run.status == "completed":
+            message_list = reversed(client.beta.threads.messages.list(
+                thread_id=varThreadId
+            ))
+ 
+            message_data = message_list.data
+            for thread_message in message_data.content:
+                for message_content in thread_message.content:
+                    message_text = message_content.text.value
+ 
+                    st.chat_message(thread_message.role).markdown(message_text)
 
 # Add a spacer
 st.write("")  # Adjust the number of these based on needed spacing
