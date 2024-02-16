@@ -36,14 +36,14 @@ if st.button('Submit'):
         )
 
         while run.status == "in_progress" or run.status=="queued":
-        run = client.beta.threads.runs.retrieve(
-            run_id=run.id,
-            thread_id=varThreadId
+            run = client.beta.threads.runs.retrieve(
+                run_id=run.id,
+                thread_id=thread.id
         )
         time.sleep(1)
         if run.status == "completed":
             message_list = reversed(client.beta.threads.messages.list(
-                thread_id=varThreadId
+                thread_id=thread.id
             ))
  
             message_data = message_list.data
