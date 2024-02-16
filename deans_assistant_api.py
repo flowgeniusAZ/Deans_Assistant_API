@@ -34,6 +34,11 @@ if st.button('Submit'):
                 }
             ]
         )
+
+       run = client.beta.threads.runs.create(
+                thread_id=thread.id,
+                assistant_id=my_assistant.id
+        )
         
         while run.status != 'completed':
             run = client.beta.threads.runs.retrieve(
