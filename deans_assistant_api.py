@@ -47,11 +47,18 @@ if st.button('Submit'):
             )
             time.sleep(5)
 
-            if run.status == "completed":
-                message_list = reversed(client.beta.threads.messages.list(
-                    thread_id=thread.id
-            ))
+            #if run.status == "completed":
+               # message_list = reversed(client.beta.threads.messages.list(
+                    #thread_id=thread.id
+            #))
 
+            if run.status == 'completed':
+                thread_messages = client.beta.threads.messages.list(thread.id)
+                for message in thread_messages.data:
+                    if message.role == 'assistant':
+                        for content_part in message.content:
+                            message_text = content_part.text.value
+                            st.markdown(f"**Assistant's Response:** {message_text}")
         
             #fetch and display messages
             #thread_messages = client.beta.threads.messages.list(thread.id)
@@ -63,12 +70,12 @@ if st.button('Submit'):
 
  
  
-            message_data = message_list.data
-            for thread_message in message_data.content:
-                for message_content in thread_message.content:
-                    message_text = message_content.text.value
+            #message_data = message_list.data
+            #for thread_message in message_data.content:
+                #for message_content in thread_message.content:
+                    #message_text = message_content.text.value
  
-                    st.chat_message(thread_message.role).markdown(message_text)
+                    #st.chat_message(thread_message.role).markdown(message_text)
 
 
 # Add a spacer
