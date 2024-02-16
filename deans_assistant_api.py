@@ -6,55 +6,36 @@ from openai import OpenAI
 import time
 import streamlit as st
 
-#Initialize OpenAI Clinet
-client = OpenAI(api_key= st.secrets.openai.api_key)
-
-#Streamlit App Title
-st.title('Dean\'s Assistant')
-
-#Streamlit image for branding
-st.image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQroYsyWjvZmkyguxf2_XUKqcWTNLkZrRbPzPL8MU5I&s', caption='Plainfield School District 202')
-
-#Streamlit user input for the prompt
-user_prompt = st.text_area("Enter your question:", "Example: A student just had his third tardy. What consequences should I consider?")
-
-#Button to submit question
-if st.button('Submit'):
-    with st.spinner('Fetching response...'):
-        #Retrieve existing assistant
-        my_assistant = client.beta.assistants.retrieve("asst_VS8FnRtUoE2P5YvZHQ7h8LzJ")
-        #st.write("Assistant Retrieved:", my_assistant)
-
-        #create thread and messages
-        thread = client.beta.threads.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": user_prompt
-                }
-            ]
+assistant_key = st.secrets.openai.assistant_key
+client = OpenAI(st.secrets.openai.api_key)
+thread = client.beta.threads.create()
+threadid = thread.id
+messages = []
+ 
+def get_run(varAsstId, varThreadId):
+    run = client.beta.threads.runs.create(
+        thread_id=varThreadId,
+        assistant_id=varAsstId
+    )
+ 
+    while run.status == "in_progress" or run.status=="queued":
+        time.sleep(1)
+        run = client.beta.threads.runs.retrieve(
+            run_id=run.id,
+            thread_id=varThreadId
         )
-
-        run = client.beta.threads.runs.create(
-            thread_id=thread.id,
-            assistant_id=my_assistant.id
-        )
-        
-        while run.status != 'completed':
-            run = client.beta.threads.runs.retrieve(
-                thread_id=thread.id,
-                run_id=run.id
-            )
-            time.sleep(5)
-
-            #fetch and display messages
-            thread_messages = client.beta.threads.messages.list(thread.id)
-            for message in thread_messages.data:
-                if message.role == 'assistant':
-                    for content_part in message.content:
-                        message_text = content_part.text.value
-                        st.markdown(f"**Assistant's Response:** {message_text}")
-                    
+ 
+        if run.status == "completed":
+            message_list = reversed(client.beta.threads.messages.list(
+                thread_id=varThreadId
+            ))
+ 
+            message_data = message_list.data
+            for thread_message in message_data.content:
+                for message_content in thread_message.content:
+                    message_text = message_content.text.value
+ 
+                    st.chat_message(thread_message.role).markdown(message_text)
  
     
 
