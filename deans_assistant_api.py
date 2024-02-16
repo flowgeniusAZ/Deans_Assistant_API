@@ -85,11 +85,10 @@ footer_html = """
 """
 st.markdown(footer_html, unsafe_allow_html=True)
 
+# Display recent questions and responses using expanders
 st.write("## Recent Questions and Responses")
-tabs = st.tabs([f"Q&A {i+1}" for i in range(len(st.session_state['q_and_a']))])
-
-for i, tab in enumerate(tabs):
-    with tab:
-        question, response = st.session_state['q_and_a'][i]
+for i, (question, response) in enumerate(st.session_state['q_and_a']):
+    with st.expander(f"Q&A {i+1}"):
         st.write(f"**Question {i+1}:** {question}")
+        st.write(f"**Response {i+1}:** {response}"):** {question}")
         st.write(f"**Response {i+1}:** {response}")
