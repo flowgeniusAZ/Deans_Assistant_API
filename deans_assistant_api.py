@@ -90,5 +90,4 @@ st.write("## Recent Questions and Responses")
 for i, (question, response) in enumerate(st.session_state['q_and_a']):
     with st.expander(f"Q&A {i+1}"):
         st.write(f"**Question {i+1}:** {question}")
-        st.write(f"**Response {i+1}:** {response}"):** {question}")
         st.write(f"**Response {i+1}:** {response}")
