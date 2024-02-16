@@ -9,6 +9,12 @@ import streamlit as st
 #Initialize OpenAI Clinet
 client = OpenAI(api_key= st.secrets.openai.api_key)
 
+# Initialize session state for storing questions and responses if not already done
+if 'q_and_a' not in st.session_state:
+    st.session_state['q_and_a'] = []
+
+
+
 #Streamlit App Title
 st.title('Dean\'s Assistant')
 
@@ -53,6 +59,11 @@ if st.button('Submit'):
                     if message.role == 'assistant':
                         for content_part in message.content:
                             message_text = content_part.text.value
+                            # Save the latest question and response pair to the session state
+                            st.session_state['q_and_a'].append((user_prompt, message_text))
+                            # Keep only the last 5 question and response pairs
+                            st.session_state['q_and_a'] = st.session_state['q_and_a'][-5:]
+                
                             st.markdown(f"**Assistant's Response:** {message_text}")
     
 
@@ -73,3 +84,12 @@ footer_html = """
 </div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)
+
+st.write("## Recent Questions and Responses")
+tabs = st.tabs([f"Q&A {i+1}" for i in range(len(st.session_state['q_and_a']))])
+
+for i, tab in enumerate(tabs):
+    with tab:
+        question, response = st.session_state['q_and_a'][i]
+        st.write(f"**Question {i+1}:** {question}")
+        st.write(f"**Response {i+1}:** {response}")
