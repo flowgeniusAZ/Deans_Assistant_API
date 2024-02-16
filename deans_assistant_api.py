@@ -35,7 +35,7 @@ if st.button('Submit'):
             ]
         )
         
-        while run.status != "completed":
+        while run.status != 'completed':
             run = client.beta.threads.runs.retrieve(
                 thread_id=thread.id,
                 run_id=run.id
