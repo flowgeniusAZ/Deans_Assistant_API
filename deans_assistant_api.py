@@ -35,15 +35,13 @@ if st.button('Submit'):
             ]
         )
         
-        
-         
         while run.status != 'completed':
             run = client.beta.threads.runs.retrieve(
                 thread_id=thread.id,
                 run_id=run.id
             )
             time.sleep(5)
-                
+
             #fetch and display messages
             thread_messages = client.beta.threads.messages.list(thread.id)
             for message in thread_messages.data:
