@@ -18,8 +18,14 @@ if 'q_and_a' not in st.session_state:
 #Streamlit App Title
 st.title('Dean\'s Assistant')
 
+# (mz) add divider
+st.divider()
+
 #Streamlit image for branding
 st.image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQroYsyWjvZmkyguxf2_XUKqcWTNLkZrRbPzPL8MU5I&s', caption='Plainfield School District 202')
+
+# (mz) add divider
+st.divider()
 
 #Streamlit user input for the prompt
 user_prompt = st.text_area("Enter your question:", "Example: A student just had his third tardy. What consequences should I consider?")
